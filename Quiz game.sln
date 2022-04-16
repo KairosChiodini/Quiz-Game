@@ -5,21 +5,126 @@ VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quiz game", "Quiz game\Quiz game.csproj", "{73D76728-684E-4EE6-A3FF-EE918A1EACE9}"
 EndProject
-Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{73D76728-684E-4EE6-A3FF-EE918A1EACE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{73D76728-684E-4EE6-A3FF-EE918A1EACE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{73D76728-684E-4EE6-A3FF-EE918A1EACE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{73D76728-684E-4EE6-A3FF-EE918A1EACE9}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {A4349FF9-48CD-47F8-885A-CD616A3D258F}
-	EndGlobalSection
-EndGlobal
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Quiz_game
+{
+    public partial class Form1 : Form
+    {
+        //Variables of Questions
+
+        int CorrectAnswer;
+        int QuestionNumber;
+        int score;
+        int percentage;
+        int TotalQuestions;
+
+
+        public Form1()
+        {
+            InitializeComponent();
+            AskQuestion(1);
+            TotalQuestions = 5;
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CheckAnswerEvent(object sender, EventArgs e)
+        {
+            var senderObject = (Button)sender;
+            int buttonTag = Convert.ToInt32(senderObject.Tag);
+
+            if(buttonTag == CorrectAnswer)
+            {
+                score++;           
+            }
+            QuestionNumber++;
+            AskQuestion(QuestionNumber);
+            
+            if(QuestionNumber == TotalQuestions)
+            {
+                percentage = (int)Math.Round((double)(score*100) / TotalQuestions);
+
+                MessageBox.Show(
+                    "Quiz - End" + Environment.NewLine + 
+                    "You have answered", + score + "Question Correctly" + Environment.NewLine +
+                    "Your total percentage is" + percentage + "%" + Environment.NewLine + 
+                    "Click ok to play again"
+                    );
+
+                score = 0;
+                QuestionNumber = 0;
+                AskQuestion(QuestionNumber);
+            
+            }
+        }
+
+        public void AskQuestion(int qnum)
+        {
+            switch (qnum)
+            {
+                case 1:
+                    pictureBox1.Image = Properties.Resources.bandeira_da_bolivia_cetim_150m_x_90cm_boliviana_D_NQ_NP_953650_MLB29486883795_022019_F;
+
+                    Question.Text = "What Country is this flag?";
+
+                    button1.Text = "Bolivia";
+                    button2.Text = "Colombia";
+                    button3.Text = "New Zeland";
+                    button4.Text = "Brazil";
+
+                    CorrectAnswer = 2;
+                    break;
+               
+                case 2:
+                    pictureBox1.Image = Properties.Resources.bandeira_da_colombia_2000px;
+
+                    Question.Text = "What Country is this flag?";
+
+                    button1.Text = "Chile";
+                    button2.Text = "Iran";
+                    button3.Text = "Estonia";
+                    button4.Text = "Colombia"; 
+
+                    CorrectAnswer = 3;
+                    break;
+                case 3:
+                    pictureBox1.Image = Properties.Resources.ireland_162323_1280_1;
+
+                    Question.Text = "What Country is this flag?";
+
+                    button1.Text = "Australia";
+                    button2.Text = "Denmark";
+                    button3.Text = "Ireland";
+                    button4.Text = "Costa Rica";
+
+                    CorrectAnswer = 1;
+                    break;
+                case 4:
+                    pictureBox1.Image = Properties.Resources.taiwan_flag;
+
+                    Question.Text = "What Country is this flag?";
+
+                    button1.Text = "Chile";
+                    button2.Text = "Taiwan";
+                    button3.Text = "Estonia";
+                    button4.Text = "Colombia";
+
+                    CorrectAnswer = 2;
+                    break;
+            }
+        }
+    }
+}
+
